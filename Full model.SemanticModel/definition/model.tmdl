@@ -1,0 +1,14 @@
+model Model
+	culture: uk-UA
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: uk-UA
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref cultureInfo uk-UA
+
