@@ -1,0 +1,46 @@
+table Товари
+	lineageTag: 7036de8e-fb32-4052-ae4b-86c1068cf7be
+
+	column ID
+		lineageTag: 3700b560-492e-45f3-9c61-ac5a5801de24
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Товари = calculated
+		mode: import
+		source = ```
+				
+				VAR __goods = 'Вхідний список товарів'
+				VAR __numbers = 
+				    DATATABLE(
+				        "Value", INTEGER,
+				        {
+				            {1},
+				            {2},
+				            {3},
+				            {4},
+				            {5}
+				        }
+				    )
+				VAR __combination = 
+				    CROSSJOIN(
+				        __goods,
+				        __numbers
+				    )
+				VAR __id =
+				    ADDCOLUMNS(
+				        __combination,
+				        "ID", [Товари] & "-" & [Value]
+				    )
+				RETURN
+				    SELECTCOLUMNS(
+				        __id,
+				        "ID", [ID]
+				    )
+				```
+
+	annotation PBI_Id = 961a638336a74496bbf283f063b257f1
+

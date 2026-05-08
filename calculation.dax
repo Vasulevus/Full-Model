@@ -1,0 +1,131 @@
+
+Товари = 
+DATATABLE(
+    "Товари", STRING,
+    {
+        {"Велосипед"},
+        {"Самокат"},
+        {"Електросамокат"},
+        {"Трьохколісний велосипед"},
+        {"Малий джип"},
+        {"Ролики"},
+        {"Скейт"},
+        {"Шолом"},
+        {"Наколінники"},
+        {"Налокітники"}
+    }
+
+)
+
+
+Список товарів повний = 
+VAR __goods = 'Товарний список' --цю таблицю ми використовуємо для генерації комбінацій, тому що вона містить унікальні товари
+VAR __numbers = 
+    DATATABLE(
+        "Value", INTEGER,
+        {
+            {1},
+            {2},
+            {3},
+            {4},
+            {5}
+        }
+    )
+VAR __combination = --замножуємо
+    CROSSJOIN(
+        __goods,
+        __numbers
+    )
+VAR __id =
+    ADDCOLUMNS(
+        __combination,
+        "ID", [Товари] & "-" & [Value]
+    )
+RETURN
+    SELECTCOLUMNS(
+        __id,
+        "ID", [ID]
+    )
+/* експериментальна таблиця
+Згенеровані продажі = 
+VAR __goods = 'Список товарів повний'
+VAR __generated = 
+    GENERATE(
+        __goods,
+        VAR __id = [ID]
+        VAR __random = RANDBETWEEN(1, 100)
+        RETURN
+            ROW(
+                "ID", __id,
+                "Продажі", __random
+            )
+    )
+RETURN
+    __generated
+*/
+
+Календар = 
+VAR __startdate = DATE(2024, 1, 1)
+VAR __enddate = DATE(2024, 12, 31)
+VAR __calendar = CALENDAR(__startdate, __enddate)
+VAR __calendar_with_details =
+    ADDCOLUMNS(
+        __calendar,
+        "Рік", YEAR([Date]),
+        "Квартал", QUARTER([Date]),
+        "Місяць", MONTH([Date]),
+        "День", DAY([Date])
+    )
+RETURN
+    __calendar_with_details
+
+Торгові точки = 
+DATATABLE(
+    "Торгові точки", STRING,
+    {
+        {"Вінниця"},
+        {"Дніпро"},
+        {"Запоріжжя"},
+        {"Івано-Франківськ"},
+        {"Луцьк"},
+        {"Львів"},
+        {"Миколаїв"},
+        {"Одеса"},
+        {"Полтава"},
+        {"Рівне"},
+        {"Суми"},
+        {"Тернопіль"},
+        {"Харків"},
+        {"Херсон"},
+        {"Хмельницький"},
+        {"Черкаси"},
+        {"Чернівці"},
+        {"Чернігів"},
+        {"Київ"}
+    }
+)
+
+Продажі = 
+VAR __calendar = 'Календар'
+VAR __tt = 'Торгові точки'
+VAR __goods = 'Список товарів повний'
+VAR __cross = CROSSJOIN(__calendar,__goods,__tt)--перемножаємо всі таблиці між собою
+VAR __generate = 
+    GENERATE(
+        __cross,
+        VAR __random = RANDBETWEEN(0,20)--створюємо випадкове значення для кількості продажів
+        RETURN
+        ROW(--створюємо таблицю з одним рядком
+            "@Кількість", __random --цей рядок містить випадкові продажі
+        )
+    )
+VAR __select = SELECTCOLUMNS(__generate,"Date",[Date],"ID",[ID],"ТТ",[Торгові точки],"Кількість товару", [@Кількість])
+RETURN
+    __select
+
+
+
+
+
+
+

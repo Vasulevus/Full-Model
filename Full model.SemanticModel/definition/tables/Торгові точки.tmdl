@@ -1,0 +1,42 @@
+table 'Торгові точки'
+	lineageTag: d27bdf05-120e-4b8d-ad97-1365a80592c9
+
+	column 'Торгові точки'
+		lineageTag: 7f5e7fca-044b-4054-946c-a9512550a6f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Торгові точки]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Торгові точки' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Торгові точки", STRING,
+				    {
+				        {"Вінниця"},
+				        {"Дніпро"},
+				        {"Запоріжжя"},
+				        {"Івано-Франківськ"},
+				        {"Луцьк"},
+				        {"Львів"},
+				        {"Миколаїв"},
+				        {"Одеса"},
+				        {"Полтава"},
+				        {"Рівне"},
+				        {"Суми"},
+				        {"Тернопіль"},
+				        {"Харків"},
+				        {"Херсон"},
+				        {"Хмельницький"},
+				        {"Черкаси"},
+				        {"Чернівці"},
+				        {"Чернігів"},
+				        {"Київ"}
+				    }
+				)
+
+	annotation PBI_Id = 805798e624864c2cbdcca09931bc91e3
+

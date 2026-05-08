@@ -1,0 +1,36 @@
+table 'Вхідний список товарів'
+	isHidden
+	lineageTag: bf97f300-6602-4654-8705-d62d900bbaf6
+
+	column Товари
+		isHidden
+		lineageTag: 6406a8bc-b867-44d2-b805-17498df06c28
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Товари]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Вхідний список товарів' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Товари", STRING,
+				    {
+				        {"Велосипед"},
+				        {"Самокат"},
+				        {"Електросамокат"},
+				        {"Трьохколісний велосипед"},
+				        {"Малий джип"},
+				        {"Ролики"},
+				        {"Скейт"},
+				        {"Шолом"},
+				        {"Наколінники"},
+				        {"Налокітники"}
+				    }
+				
+				)
+
+	annotation PBI_Id = f090ff27f6c543368439dfd46b42c9d1
+

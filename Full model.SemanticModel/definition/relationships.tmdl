@@ -1,0 +1,12 @@
+relationship c3a95d5e-ead1-e88e-76a2-162447ee5a09
+	fromColumn: Продажі.Date
+	toColumn: Календар.Date
+
+relationship 613bada0-4d87-8f92-d466-f1c5ae5c46be
+	fromColumn: Продажі.ID
+	toColumn: Товари.ID
+
+relationship 6589f80b-0b6b-be4e-b0bb-bddba34502f1
+	fromColumn: Продажі.ТТ
+	toColumn: 'Торгові точки'.'Торгові точки'
+

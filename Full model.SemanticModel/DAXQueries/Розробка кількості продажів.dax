@@ -1,0 +1,23 @@
+// Ласкаво просимо до подання запитів DAX! Дізнайтеся більше про запити DAX тут: https://aka.ms/dax-queries.
+// Щоб отримати доступ до швидких запитів або попросити Copilot допомогти з написанням запитів DAX, клацніть правою кнопкою миші на таблицях, стовпцях або мірах в області даних.
+DEFINE
+VAR __calendar = 'Календар'
+VAR __tt = 'Торгові точки'
+VAR __goods = 'Список товарів повний'
+VAR __cross = 
+    CROSSJOIN(__calendar,__goods,__tt,        VAR __random = RANDBETWEEN(0,20)
+        RETURN
+        ROW(
+            "@Кількість", __random
+        ) )
+VAR __generate = 
+    GENERATE(
+        __cross,
+        VAR __random = RANDBETWEEN(0,20)
+        RETURN
+        ROW(
+            "@Кількість", __random
+        )
+    )
+EVALUATE
+    __cross

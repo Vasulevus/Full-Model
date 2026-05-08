@@ -1,0 +1,77 @@
+createOrReplace
+
+	table Календар
+		lineageTag: 0f70f5fc-5cd0-4919-92cf-dd0257e2eee2
+
+		column Date
+			formatString: Long Date
+			lineageTag: 6192a917-8b6e-4931-b222-6fc4e1962442
+			summarizeBy: none
+			isNameInferred
+			sourceColumn: [Date]
+
+			variation Варіація
+				isDefault
+				relationship: 1f976f1a-2387-41ac-bf75-ffceec7d6471
+				defaultHierarchy: LocalDateTable_186e7498-fadc-441b-b9a3-966f4dc73478.'Ієрархія дат'
+
+			annotation SummarizationSetBy = Automatic
+
+			annotation UnderlyingDateTimeDataType = Date
+
+		column Рік
+			formatString: 0
+			lineageTag: 6ff892fd-a648-4f03-8337-32daf95fed48
+			summarizeBy: sum
+			isNameInferred
+			sourceColumn: [Рік]
+
+			annotation SummarizationSetBy = Automatic
+
+		column Квартал
+			formatString: 0
+			lineageTag: 37c70b77-0dbd-4526-9e93-1678b74cd561
+			summarizeBy: sum
+			isNameInferred
+			sourceColumn: [Квартал]
+
+			annotation SummarizationSetBy = Automatic
+
+		column Місяць
+			formatString: 0
+			lineageTag: 09db844d-20b0-484f-9d8b-55ad265ddd9c
+			summarizeBy: sum
+			isNameInferred
+			sourceColumn: [Місяць]
+
+			annotation SummarizationSetBy = Automatic
+
+		column День
+			formatString: 0
+			lineageTag: a4966324-a7c5-433e-a452-e6eea9542b48
+			summarizeBy: sum
+			isNameInferred
+			sourceColumn: [День]
+
+			annotation SummarizationSetBy = Automatic
+
+		partition Календар = calculated
+			mode: import
+			source =
+					
+					VAR __startdate = DATE(2025, 1, 1)
+					VAR __enddate = DATE(2026, 12, 31)
+					VAR __calendar = CALENDAR(__startdate, __enddate)
+					VAR __calendar_with_details =
+					    ADDCOLUMNS(
+					        __calendar,
+					        "Рік", YEAR([Date]),
+					        "Квартал", QUARTER([Date]),
+					        "Місяць", MONTH([Date]),
+					        "День", DAY([Date])
+					    )
+					RETURN
+					    __calendar_with_details
+
+		annotation PBI_Id = 7d3e7873faed4e33b3f2ef1491f24127
+

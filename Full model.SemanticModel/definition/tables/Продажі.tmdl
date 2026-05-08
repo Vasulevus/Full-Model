@@ -1,0 +1,63 @@
+table Продажі
+	lineageTag: 6ea7881d-e381-4196-b55a-68e6ab685985
+
+	column Date
+		formatString: Long Date
+		lineageTag: 47a82af3-13ae-41fd-9e6f-02e234757d26
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ID
+		lineageTag: ba5b9e40-85ff-46d6-812e-e4f40dfe3259
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ТТ
+		lineageTag: e22f659c-af4e-4571-b03f-f33027411b5b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ТТ]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Кількість товару'
+		formatString: 0
+		lineageTag: c42bc3b2-0164-496d-aacf-dede4a438961
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Кількість товару]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Продажі = calculated
+		mode: import
+		source = ```
+				
+				VAR __calendar = 'Календар'
+				VAR __tt = 'Торгові точки'
+				VAR __goods = 'Товари'
+				VAR __cross = CROSSJOIN(__calendar,__goods,__tt)--перемножаємо всі таблиці між собою
+				VAR __generate = 
+				    GENERATE(
+				        __cross,
+				        VAR __random = RANDBETWEEN(0,20)--створюємо випадкове значення для кількості продажів
+				        RETURN
+				        ROW(--створюємо таблицю з одним рядком
+				            "@Кількість", __random --цей рядок містить випадкові продажі
+				        )
+				    )
+				VAR __select = SELECTCOLUMNS(__generate,"Date",[Date],"ID",[ID],"ТТ",[Торгові точки],"Кількість товару", [@Кількість])
+				RETURN
+				    __select
+				```
+
+	annotation PBI_Id = 52b377b249ed447a8f591404ba2176f7
+

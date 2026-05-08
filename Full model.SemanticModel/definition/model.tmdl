@@ -8,7 +8,16 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_ProTooling = ["DevMode"]
+annotation PBI_ProTooling = ["DevMode","DaxQueryView_Desktop","TMDLView_Desktop"]
+
+annotation PBI_QueryOrder = []
+
+ref table 'Вхідний список товарів'
+ref table Товари
+ref table Календар
+ref table 'Торгові точки'
+ref table Продажі
+ref table Таблиця
 
 ref cultureInfo uk-UA
 
