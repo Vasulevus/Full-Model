@@ -11,7 +11,7 @@
         {
           "location": {
             "x": 905.5,
-            "y": 810
+            "y": 828.75
           },
           "nodeIndex": "Календар",
           "nodeLineageTag": "0f70f5fc-5cd0-4919-92cf-dd0257e2eee2",
@@ -24,7 +24,7 @@
         {
           "location": {
             "x": 878,
-            "y": 552.5
+            "y": 571.25
           },
           "nodeIndex": "Торгові точки",
           "nodeLineageTag": "d27bdf05-120e-4b8d-ad97-1365a80592c9",
@@ -37,7 +37,7 @@
         {
           "location": {
             "x": 382,
-            "y": 310
+            "y": 328.75
           },
           "nodeIndex": "Продажі",
           "nodeLineageTag": "6ea7881d-e381-4196-b55a-68e6ab685985",
@@ -50,7 +50,7 @@
         {
           "location": {
             "x": 1297,
-            "y": 184
+            "y": 202.75
           },
           "nodeIndex": "Вхідний список товарів",
           "size": {
@@ -62,7 +62,7 @@
         {
           "location": {
             "x": 968,
-            "y": 15
+            "y": 33.75
           },
           "nodeIndex": "Товари",
           "size": {
@@ -74,10 +74,22 @@
         {
           "location": {
             "x": 1199,
-            "y": 402.5
+            "y": 452.25
           },
-          "nodeIndex": "Таблиця",
-          "nodeLineageTag": "ff984e02-6372-4148-94bc-b0678eab8abc",
+          "nodeIndex": "Export",
+          "nodeLineageTag": "9bff52d8-2ce0-40db-a963-aac2053de14e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1199,
+            "y": 408.75
+          },
+          "nodeIndex": "Сезонність",
           "size": {
             "height": 200,
             "width": 234

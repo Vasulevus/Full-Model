@@ -44,10 +44,32 @@ table Продажі
 				VAR __calendar = 'Календар'
 				VAR __tt = 'Торгові точки'
 				VAR __goods = 'Товари'
+				VAR __seasons = 
+				    DATATABLE(
+				        "Місяць", INTEGER,
+				        "%", DECIMAL,
+				        {
+				            {12, 1.564825478},
+				            {11, 1.279215017},
+				            {10, 1.227528095},
+				            {9, 0.972744239},
+				            {8, 1.450662596},
+				            {7, 0.744002904},
+				            {6, 0.904875116},
+				            {5, 0.901468644},
+				            {4, 0.898575053},
+				            {3, 0.979538021},
+				            {2, 0.492873263},
+				            {1, 0.583691574}
+				        }
+				    )
 				VAR __cross = CROSSJOIN(__calendar,__goods,__tt)--перемножаємо всі таблиці між собою
+				VAR __select = SELECTCOLUMNS(__cross, "Місяць", [Місяць]+0, "Дата", [Date], "ID", [ID], "Торгові точки" , [Торгові точки])
+				VAR __join = NATURALLEFTOUTERJOIN(__cross,__seasons)
+				/*
 				VAR __generate = 
 				    GENERATE(
-				        __cross,
+				        __join,
 				        VAR __random = RANDBETWEEN(0,20)--створюємо випадкове значення для кількості продажів
 				        RETURN
 				        ROW(--створюємо таблицю з одним рядком
@@ -55,8 +77,9 @@ table Продажі
 				        )
 				    )
 				VAR __select = SELECTCOLUMNS(__generate,"Date",[Date],"ID",[ID],"ТТ",[Торгові точки],"Кількість товару", [@Кількість])
+				*/
 				RETURN
-				    __select
+				    __join
 				```
 
 	annotation PBI_Id = 52b377b249ed447a8f591404ba2176f7

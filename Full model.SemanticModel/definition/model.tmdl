@@ -10,14 +10,15 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode","DaxQueryView_Desktop","TMDLView_Desktop"]
 
-annotation PBI_QueryOrder = []
+annotation PBI_QueryOrder = ["Export"]
 
 ref table 'Вхідний список товарів'
 ref table Товари
 ref table Календар
 ref table 'Торгові точки'
 ref table Продажі
-ref table Таблиця
+ref table Export
+ref table Сезонність
 
 ref cultureInfo uk-UA
 

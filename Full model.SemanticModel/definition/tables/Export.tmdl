@@ -1,0 +1,34 @@
+table Export
+	lineageTag: 9bff52d8-2ce0-40db-a963-aac2053de14e
+
+	column Місяць
+		dataType: string
+		lineageTag: 78910ccb-b2b4-497a-8dd8-68231d48a8a9
+		summarizeBy: none
+		sourceColumn: Місяць
+
+		annotation SummarizationSetBy = Automatic
+
+	column Продажі
+		dataType: double
+		lineageTag: ac5c99aa-bb49-42c8-bbc7-aef07b990587
+		summarizeBy: sum
+		sourceColumn: Продажі
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Export = m
+		mode: import
+		source =
+				let
+				    Джерело = Excel.Workbook(File.Contents("C:\Users\Vasulevus\Downloads\data (30).xlsx"), null, true),
+				    Export_Sheet = Джерело{[Item="Export",Kind="Sheet"]}[Data],
+				    #"Заголовки з підвищеним рівнем" = Table.PromoteHeaders(Export_Sheet, [PromoteAllScalars=true]),
+				    #"Змінений тип" = Table.TransformColumnTypes(#"Заголовки з підвищеним рівнем",{{"Місяць", type text}, {"Продажі", type number}})
+				in
+				    #"Змінений тип"
+
+	annotation PBI_ResultType = Table
+

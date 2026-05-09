@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/unappliedChanges/1.0.0/schema.json",
+  "conceptualSchemaSettings": {},
+  "queries": [
+    {
+      "name": "Export",
+      "lineageTag": "9bff52d8-2ce0-40db-a963-aac2053de14e",
+      "navigationStepName": "Навігація",
+      "text": [
+        "let",
+        "    Джерело = Excel.Workbook(File.Contents(\"C:\\Users\\Vasulevus\\Downloads\\data (30).xlsx\"), null, true),",
+        "    Export_Sheet = Джерело{[Item=\"Export\",Kind=\"Sheet\"]}[Data],",
+        "    #\"Заголовки з підвищеним рівнем\" = Table.PromoteHeaders(Export_Sheet, [PromoteAllScalars=true]),",
+        "    #\"Змінений тип\" = Table.TransformColumnTypes(#\"Заголовки з підвищеним рівнем\",{{\"Місяць\", type text}, {\"Продажі\", type number}}),",
+        "    #\"Відфільтровані рядки\" = Table.SelectRows(#\"Змінений тип\", each ([Продажі] <> null) and ([Місяць] <> \"Бер'26\" and [Місяць] <> \"Лют'26\" and [Місяць] <> \"Січ'26\")),",
+        "    #\"Транспонована таблиця\" = Table.Transpose(#\"Відфільтровані рядки\"),",
+        "    #\"Заголовки з підвищеним рівнем1\" = Table.PromoteHeaders(#\"Транспонована таблиця\", [PromoteAllScalars=true]),",
+        "    #\"Змінений тип1\" = Table.TransformColumnTypes(#\"Заголовки з підвищеним рівнем1\",{{\"Гру'25\", type number}, {\"Лис'25\", type number}, {\"Жов'25\", type number}, {\"Вер'25\", type number}, {\"Сер'25\", type number}, {\"Лип'25\", type number}, {\"Чер'25\", type number}, {\"Тра'25\", type number}, {\"Кві'25\", type number}, {\"Бер'25\", type number}, {\"Лют'25\", type number}, {\"Січ'25\", type number}, {\"Total\", type number}}),",
+        "    #\"Стовпці, зведення яких скасовано\" = Table.UnpivotOtherColumns(#\"Змінений тип1\", {\"Total\"}, \"Атрибут\", \"Значення\"),",
+        "    #\"Перевпорядковані стовпці\" = Table.ReorderColumns(#\"Стовпці, зведення яких скасовано\",{\"Атрибут\", \"Значення\", \"Total\"}),",
+        "    #\"Додане настроюване значення\" = Table.AddColumn(#\"Перевпорядковані стовпці\", \"%\", each [Значення] / [Total]),",
+        "    #\"Видалені стовпці\" = Table.RemoveColumns(#\"Додане настроюване значення\",{\"Значення\", \"Total\"}),",
+        "    #\"Обчислений квадрат\" = Table.TransformColumns(#\"Видалені стовпці\",{{\"%\", each _ * 12}})",
+        "in",
+        "    #\"Обчислений квадрат\""
+      ],
+      "isDirectQuery": false,
+      "resultType": "Table"
+    },
+    {
+      "name": "Таблиця",
+      "navigationStepName": "Навігація",
+      "text": [
+        "let",
+        "    Джерело = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"Lc3JEcAwCEPRXnz2AWTEUksm/bcRD+T65iOeZynWXrrplqBFrndf1EZEQSkagzKIIFKKjXVNdgXCDKfasjujuIPlbdHdjURQYm0+t2IZVJ2Ov6l5uk1nbVnJoPC0nf9v8aRA29BmhYwDn07bmMdLGXfv/QA=\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Місяць = _t, #\"%\" = _t]),",
+        "    #\"Змінений тип\" = Table.TransformColumnTypes(Джерело,{{\"Місяць\", Int64.Type}, {\"%\", type number}})",
+        "in",
+        "    #\"Змінений тип\""
+      ],
+      "isDirectQuery": false,
+      "resultType": "Table"
+    }
+  ],
+  "queryGroups": [],
+  "culture": "uk-UA",
+  "firewallEnabled": true
+}
