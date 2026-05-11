@@ -1,17 +1,6 @@
 table Продажі
 	lineageTag: 6ea7881d-e381-4196-b55a-68e6ab685985
 
-	column Date
-		formatString: Long Date
-		lineageTag: 47a82af3-13ae-41fd-9e6f-02e234757d26
-		summarizeBy: none
-		isNameInferred
-		sourceColumn: [Date]
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
 	column ID
 		lineageTag: ba5b9e40-85ff-46d6-812e-e4f40dfe3259
 		summarizeBy: none
@@ -20,8 +9,17 @@ table Продажі
 
 		annotation SummarizationSetBy = Automatic
 
+	column Date
+		formatString: General Date
+		lineageTag: 9d584fb4-bcc4-4fa5-8e1e-aad231790693
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
 	column ТТ
-		lineageTag: e22f659c-af4e-4571-b03f-f33027411b5b
+		lineageTag: 16fd30df-f14f-4a95-a161-a03a91bcd2e8
 		summarizeBy: none
 		isNameInferred
 		sourceColumn: [ТТ]
@@ -29,13 +27,15 @@ table Продажі
 		annotation SummarizationSetBy = Automatic
 
 	column 'Кількість товару'
-		formatString: 0
-		lineageTag: c42bc3b2-0164-496d-aacf-dede4a438961
+		formatString: #,0.###############\ "₴";-#,0.###############\ "₴";#,0.###############\ "₴"
+		lineageTag: e42697a5-f0bd-4aba-b094-f6ff681a5992
 		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [Кількість товару]
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"uk-UA"}
 
 	partition Продажі = calculated
 		mode: import
@@ -65,21 +65,21 @@ table Продажі
 				    )
 				VAR __cross = CROSSJOIN(__calendar,__goods,__tt)--перемножаємо всі таблиці між собою
 				VAR __select = SELECTCOLUMNS(__cross, "Місяць", [Місяць]+0, "Дата", [Date], "ID", [ID], "Торгові точки" , [Торгові точки])
-				VAR __join = NATURALLEFTOUTERJOIN(__cross,__seasons)
-				/*
+				VAR __join = NATURALLEFTOUTERJOIN(__select,__seasons)
+				
 				VAR __generate = 
 				    GENERATE(
 				        __join,
 				        VAR __random = RANDBETWEEN(0,20)--створюємо випадкове значення для кількості продажів
 				        RETURN
 				        ROW(--створюємо таблицю з одним рядком
-				            "@Кількість", __random --цей рядок містить випадкові продажі
+				            "@Кількість", __random * [%] --цей рядок містить випадкові продажі
 				        )
 				    )
-				VAR __select = SELECTCOLUMNS(__generate,"Date",[Date],"ID",[ID],"ТТ",[Торгові точки],"Кількість товару", [@Кількість])
-				*/
+				VAR __select3 = SELECTCOLUMNS(__generate,"Date",[Дата],"ID",[ID],"ТТ",[Торгові точки],"Кількість товару", ROUND( [@Кількість],0))
+				
 				RETURN
-				    __join
+				    __select3
 				```
 
 	annotation PBI_Id = 52b377b249ed447a8f591404ba2176f7

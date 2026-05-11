@@ -4,8 +4,8 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 203.42856270926342,
-        "y": 0
+        "x": 0,
+        "y": 347.32142857142856
       },
       "nodes": [
         {
@@ -65,31 +65,6 @@
             "y": 33.75
           },
           "nodeIndex": "Товари",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 1199,
-            "y": 452.25
-          },
-          "nodeIndex": "Export",
-          "nodeLineageTag": "9bff52d8-2ce0-40db-a963-aac2053de14e",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 1199,
-            "y": 408.75
-          },
-          "nodeIndex": "Сезонність",
           "size": {
             "height": 200,
             "width": 234
