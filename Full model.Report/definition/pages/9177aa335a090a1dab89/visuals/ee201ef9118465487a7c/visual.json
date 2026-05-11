@@ -1,0 +1,99 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "ee201ef9118465487a7c",
+  "position": {
+    "x": 9.6055210305030236,
+    "y": 289.53784820516256,
+    "z": 1,
+    "height": 430.87622908256424,
+    "width": 1196.5734769426624,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "map",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Продажі"
+                    }
+                  },
+                  "Property": "ТТ"
+                }
+              },
+              "queryRef": "Продажі.ТТ",
+              "nativeQueryRef": "ТТ",
+              "active": true
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Продажі"
+                        }
+                      },
+                      "Property": "Кількість товару"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Продажі.Кількість товару)",
+              "nativeQueryRef": "Кількість товару"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7c9d3822c792cf86f6cc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Продажі"
+              }
+            },
+            "Property": "ТТ"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "f548951bff021aac9410",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Продажі"
+                  }
+                },
+                "Property": "Кількість товару"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
