@@ -63,7 +63,7 @@ table Календар
 		mode: import
 		source =
 				
-				VAR __startdate = DATE(2025, 1, 1)
+				VAR __startdate = DATE(2024, 1, 1)
 				VAR __enddate = DATE(2026, 12, 31)
 				VAR __calendar = CALENDAR(__startdate, __enddate)
 				VAR __calendar_with_details =

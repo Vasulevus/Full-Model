@@ -17,7 +17,6 @@ ref table Товари
 ref table Календар
 ref table 'Торгові точки'
 ref table Продажі
-ref table Таблиця
 
 ref cultureInfo uk-UA
 

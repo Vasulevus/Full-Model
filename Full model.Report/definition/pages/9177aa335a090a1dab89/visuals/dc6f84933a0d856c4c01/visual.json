@@ -10,7 +10,7 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "lineClusteredColumnComboChart",
+    "visualType": "lineChart",
     "query": {
       "queryState": {
         "Category": {
@@ -55,26 +55,30 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Календар"
+                  }
+                },
+                "Property": "Date"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "9250fe2c2193d67394ba",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Календар"
-              }
-            },
-            "Property": "Date"
-          }
-        },
-        "type": "Advanced"
-      },
       {
         "name": "c2b995a32d11c6a01de2",
         "field": {
@@ -87,8 +91,7 @@
             "Property": "Date"
           }
         },
-        "type": "Categorical",
-        "howCreated": "User"
+        "type": "Categorical"
       },
       {
         "name": "525e7664c1c174041488",
@@ -121,7 +124,7 @@
         "howCreated": "User"
       },
       {
-        "name": "6d22387410e4c9b64ef3",
+        "name": "d3e924e5642e521f4388",
         "field": {
           "Aggregation": {
             "Expression": {
