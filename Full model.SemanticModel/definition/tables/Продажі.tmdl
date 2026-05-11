@@ -27,15 +27,13 @@ table Продажі
 		annotation SummarizationSetBy = Automatic
 
 	column 'Кількість товару'
-		formatString: #,0.###############\ "₴";-#,0.###############\ "₴";#,0.###############\ "₴"
+		formatString: #,0
 		lineageTag: e42697a5-f0bd-4aba-b094-f6ff681a5992
 		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [Кількість товару]
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"currencyCulture":"uk-UA"}
 
 	partition Продажі = calculated
 		mode: import
@@ -73,10 +71,16 @@ table Продажі
 				        VAR __random = RANDBETWEEN(0,20)--створюємо випадкове значення для кількості продажів
 				        RETURN
 				        ROW(--створюємо таблицю з одним рядком
-				            "@Кількість", __random * [%] * IF(YEAR([Дата]) = YEAR(MINX(__calendar,[Date])), 1, POWER( 1.1, YEAR([Дата]) - YEAR(MINX(__calendar,[Date])))) --цей рядок містить випадкові продажі (_random), [%] містить сезонність, а if містить складний відсоток накопичення, де різниця у роках множиться збільшується на 10% щороку
+				            "@Кількість", __random * [%] * IF(YEAR([Дата]) = YEAR(MINX(__calendar,[Date])), 1, POWER( 1.1, YEAR([Дата]) - YEAR(MINX(__calendar,[Date])))+ RANDBETWEEN(-0.1,0.1))) --цей рядок містить випадкові продажі (_random), [%] містить сезонність, а if містить складний відсоток накопичення, де різниця у роках множиться збільшується на 10% щороку, а також додаємо шум
 				        )
-				    )
-				VAR __select3 = SELECTCOLUMNS(__generate,"Date",[Дата],"ID",[ID],"ТТ",[Торгові точки],"Кількість товару", ROUND( [@Кількість],0))
+				    
+				VAR __select3 = 
+				    SELECTCOLUMNS(
+				        __generate,
+				        "Date",[Дата],
+				        "ID",[ID],
+				        "ТТ",[Торгові точки],
+				        "Кількість товару", IF( ROUND( [@Кількість],0) = 0, 1, ROUND( [@Кількість],0) ))--виправляємо, коли кількість проданих товарів = 0
 				
 				RETURN
 				    __select3
